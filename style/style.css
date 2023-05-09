@@ -17,6 +17,19 @@ body {
 h1 {
     text-align: center;
     color: white;
+    animation: text-color 2s infinite;
+}
+
+
+/* Define the animation */
+
+@keyframes text-color {
+    0% {
+        color: yellow;
+    }
+    50% {
+        color: red;
+    }
 }
 
 #gpa-form {
@@ -55,6 +68,21 @@ h1 {
     cursor: pointer;
     /* Set the border radius to 50% */
     border-radius: 50%;
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+button {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background: rgb(0, 87, 128);
+    color: white;
+    border: none;
+    cursor: pointer;
+    /* Set the border radius to 50% */
+    border-radius: 50%;
+    /* Add a shadow effect */
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
 
@@ -69,6 +97,23 @@ h1 {
     margin: 20px auto;
     border: 2px solid blue;
     padding: 10px;
+    /* Add an animation */
+    animation: border-color 3s infinite;
+}
+
+
+/* Define the animation */
+
+@keyframes border-color {
+    0% {
+        border-color: blue;
+    }
+    50% {
+        border-color: yellow;
+    }
+    100% {
+        border-color: red;
+    }
 }
 
 #gpa-result p {
