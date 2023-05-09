@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<head>
+    <title>GPA Calculator</title>
+
+    <link rel="stylesheet" href="style/style.css">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+
+<body>
+    <h1><span id="element"></span>
+    </h1>
+    <form id="gpa-form">
+        <table id="gpa-table">
+            <thead>
+                <tr>
+                    <th>Course</th>
+                    <th>Credits</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" name="course" placeholder="Enter course name"></td>
+                    <td><input type="number" name="credits" placeholder="Enter credits"></td>
+                    <td><input type="text" name="grade" placeholder="Enter letter grade"></td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" id="add-course">+ Add more courses</button>
+        <button type="button" id="add-semester">+ Add a semester</button>
+        <!-- Add a button to show or hide the prior GPA section -->
+        <button type="button" id="toggle-prior-gpa">Show/Hide Prior Semester's GPA</button>
+
+        <!-- Wrap the prior GPA section in a table -->
+        <table id="prior-gpa">
+            <tr>
+                <td><label for="prior-gpa-input">Prior Semester's GPA (optional)</label></td>
+                <td><input type="number" id="prior-gpa-input" name="prior-gpa" placeholder="Enter prior GPA"></td>
+            </tr>
+            <tr>
+                <td><label for="prior-credits-input">Credits Completed</label></td>
+                <td><input type="number" id="prior-credits-input" name="prior-credits" placeholder="Enter prior credits"></td>
+            </tr>
+        </table>
+        <button type="submit" id="calculate-gpa">Calculate GPA</button>
+    </form>
+    <div id="gpa-result">
+        <p>Your GPA for this semester is: <span id="semester-gpa"></span></p>
+        <p>Your cumulative GPA is: <span id="cumulative-gpa"></span></p>
+    </div>
+
+    <script src="https://unpkg.com/typed.js@2.0.15/dist/typed.umd.js"></script>
+
+    <script src="js/script.js"></script>
+</body>

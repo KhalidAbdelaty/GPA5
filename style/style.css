@@ -1,0 +1,76 @@
+body {
+    font: 20px Arial, sans-serif;
+    margin: 20px;
+    /* Set a #1f242d background color */
+    background: #1f242d;
+}
+
+
+/* Use a media query to change the background color for screens smaller than 600px */
+
+@media (max-width: 600px) {
+    body {
+        background-color: #1f242d;
+    }
+}
+
+h1 {
+    text-align: center;
+    color: white;
+}
+
+#gpa-form {
+    width: 80%;
+    margin: 0 auto;
+}
+
+#gpa-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#gpa-table th {
+    background: lightblue;
+    padding: 10px;
+}
+
+#gpa-table td {
+    border: 1px solid black;
+    padding: 5px;
+}
+
+#gpa-table input {
+    width: 80%;
+}
+
+#add-course,
+#add-semester,
+#calculate-gpa {
+    display: block;
+    margin: 10px auto;
+    padding: 10px 20px;
+    background: rgb(0, 87, 128);
+    color: white;
+    border: none;
+    cursor: pointer;
+    /* Set the border radius to 50% */
+    border-radius: 50%;
+}
+
+
+/* Hide the prior GPA section by default */
+
+#prior-gpa {
+    display: none;
+}
+
+#gpa-result {
+    width: 80%;
+    margin: 20px auto;
+    border: 2px solid blue;
+    padding: 10px;
+}
+
+#gpa-result p {
+    font-weight: bold;
+}
