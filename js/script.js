@@ -15,15 +15,17 @@ function createCourseRow() {
     // Create a new table row element
     const tr = document.createElement("tr");
 
-    // Create three table data elements for course name, credits, and grade
+    // Create four table data elements for course name, credits, grade, and points
     const tdCourse = document.createElement("td");
     const tdCredits = document.createElement("td");
     const tdGrade = document.createElement("td");
+    const tdPoints = document.createElement("td");
 
-    // Create three input elements for course name, credits, and grade
+    // Create four input elements for course name, credits, grade, and points
     const inputCourse = document.createElement("input");
     const inputCredits = document.createElement("input");
     const inputGrade = document.createElement("input");
+    const inputPoints = document.createElement("input");
 
     // Set the attributes and placeholders for the input elements
     inputCourse.setAttribute("type", "text");
@@ -38,63 +40,44 @@ function createCourseRow() {
     inputGrade.setAttribute("name", "grade");
     inputGrade.setAttribute("placeholder", "Enter letter grade");
 
+    inputPoints.setAttribute("type", "number"); // Allow any numeric value
+    inputPoints.setAttribute("name", "points");
+    inputPoints.setAttribute("placeholder", "Enter points");
+
     // Append the input elements to the table data elements
     tdCourse.appendChild(inputCourse);
     tdCredits.appendChild(inputCredits);
     tdGrade.appendChild(inputGrade);
+    tdPoints.appendChild(inputPoints);
 
     // Append the table data elements to the table row element
     tr.appendChild(tdCourse);
     tr.appendChild(tdCredits);
     tr.appendChild(tdGrade);
+    tr.appendChild(tdPoints);
 
     // Return the table row element
     return tr;
 }
 
+
+
 // Define a function to create a new table body for a semester
 function createSemesterBody() {
     // Create a new table body element
-    const tbody = document.createElement("tbody");
+    const tbody = document.createElement('tbody');
 
-    // Create a new table row element for the semester title
-    const trTitle = document.createElement("tr");
+    // Create a new table row element for the semester header
+    const trHeader = document.createElement('tr');
+    const tdHeader = document.createElement('td');
+    tdHeader.setAttribute('colspan', '4');
+    tdHeader.innerHTML = `<h3>Semester ${gpaTable.querySelectorAll('tbody').length + 1}</h3>`;
+    trHeader.appendChild(tdHeader);
+    tbody.appendChild(trHeader);
 
-    // Create a new table data element for the semester title
-    const tdTitle = document.createElement("td");
-
-    // Set the colspan attribute to span three columns
-    tdTitle.setAttribute("colspan", "3");
-
-    // Create a new heading element for the semester title
-    const h3Title = document.createElement("h3");
-
-    // Get the number of semesters in the table
-    const semesterCount = gpaTable.querySelectorAll("tbody").length;
-
-    // Set the text content of the heading element to Semester n
-    h3Title.textContent = `Semester ${semesterCount + 1}`;
-
-    // Append the heading element to the table data element
-    tdTitle.appendChild(h3Title);
-
-    // Append the table data element to the table row element
-    trTitle.appendChild(tdTitle);
-
-    // Append the table row element to the table body element
-    tbody.appendChild(trTitle);
-
-    // Create four new table row elements for four courses
-    const tr1 = createCourseRow();
-    const tr2 = createCourseRow();
-    const tr3 = createCourseRow();
-    const tr4 = createCourseRow();
-
-    // Append the table row elements to the table body element
-    tbody.appendChild(tr1);
-    tbody.appendChild(tr2);
-    tbody.appendChild(tr3);
-    tbody.appendChild(tr4);
+    // Create a new table row element for a course
+    const newCourseRow = createCourseRow();
+    tbody.appendChild(newCourseRow);
 
     // Return the table body element
     return tbody;
@@ -103,30 +86,14 @@ function createSemesterBody() {
 // Define a function to convert a letter grade to a numerical value
 function convertLetterGrade(grade) {
     switch (grade.toUpperCase()) {
-        case "A+":
-            return 4.3;
         case "A":
-            return 4;
-        case "A-":
-            return 3.7;
-        case "B+":
-            return 3;
+            return 5;
         case "B":
-            return 3;
-        case "B-":
-            return 2.7;
-        case "C+":
-            return 2.3;
+            return 3.4;
         case "C":
-            return 2;
-        case "C-":
-            return 1.7;
-        case "D+":
-            return 1.3;
+            return 2.4;
         case "D":
-            return 1;
-        case "D-":
-            return 0.7;
+            return 1.4;
         case "F":
             return 0;
         default:
@@ -136,33 +103,30 @@ function convertLetterGrade(grade) {
 
 // Define a function to calculate the GPA for a semester
 function calculateSemesterGpa(tbody) {
-    // Get the input elements for credits and grades in the table body
+    // Get the input elements for credits and points in the table body
     const creditsInputs = tbody.querySelectorAll("input[name='credits']");
-    const gradesInputs = tbody.querySelectorAll("input[name='grade']");
+    const pointsInputs = tbody.querySelectorAll("input[name='points']");
 
-    // Initialize variables to store the total credits and grade points
+    // Initialize variables to store the total credits and credit points
     let totalCredits = 0;
-    let totalGradePoints = 0;
+    let totalCreditPoints = 0;
 
-    // Loop through the input elements and calculate the grade points
+    // Loop through the input elements and calculate the credit points
     for (let i = 0; i < creditsInputs.length; i++) {
-        // Get the credit and grade values from the input elements
+        // Get the credit and points values from the input elements
         const credit = Number(creditsInputs[i].value);
-        const grade = gradesInputs[i].value;
+        const points = Number(pointsInputs[i].value);
 
-        // Convert the grade to a numerical value
-        const gradeValue = convertLetterGrade(grade);
-
-        // If the credit and grade values are valid, add them to the totals
-        if (credit > 0 && gradeValue !== null) {
+        // If the credit and points values are valid, add them to the totals
+        if (credit > 0 && points > 0) {
             totalCredits += credit;
-            totalGradePoints += credit * gradeValue;
+            totalCreditPoints += credit * points;
         }
     }
 
     // If the total credits are positive, calculate and return the GPA
     if (totalCredits > 0) {
-        const gpa = totalGradePoints / totalCredits;
+        const gpa = totalCreditPoints / totalCredits;
         return gpa.toFixed(2);
     }
 
@@ -172,48 +136,35 @@ function calculateSemesterGpa(tbody) {
     }
 }
 
+
+
 // Define a function to calculate the cumulative GPA
 function calculateCumulativeGpa() {
     // Get the table body elements for each semester
     const semesterBodies = gpaTable.querySelectorAll("tbody");
 
-    // Initialize variables to store the total credits and grade points
-    let totalCredits = 0;
-    let totalGradePoints = 0;
+    // Initialize variables to store the GPAs for the first and second semesters
+    let firstSemesterGpa = 0;
+    let secondSemesterGpa = 0;
 
-    // Loop through the table body elements and calculate the grade points
+    // Loop through the table body elements and get the GPAs for the first and second semesters
     for (let i = 0; i < semesterBodies.length; i++) {
-        // Get the GPA and credits for each semester
+        // Get the GPA for each semester
         const gpa = Number(calculateSemesterGpa(semesterBodies[i]));
-        const credits = Number(getSemesterCredits(semesterBodies[i]));
 
-        // If the GPA and credits are valid, add them to the totals
-        if (gpa > 0 && credits > 0) {
-            totalCredits += credits;
-            totalGradePoints += credits * gpa;
+        // If this is the first semester, store its GPA
+        if (i === 0) {
+            firstSemesterGpa = gpa;
+        }
+        // If this is the second semester, store its GPA
+        else if (i === 1) {
+            secondSemesterGpa = gpa;
         }
     }
 
-    // Get the prior GPA and credits from the input elements
-    const priorGpa = Number(priorGpaInput.value);
-    const priorCredits = Number(priorCreditsInput.value);
-
-    // If the prior GPA and credits are valid, add them to the totals
-    if (priorGpa > 0 && priorCredits > 0) {
-        totalCredits += priorCredits;
-        totalGradePoints += priorCredits * priorGpa;
-    }
-
-    // If the total credits are positive, calculate and return the cumulative GPA
-    if (totalCredits > 0) {
-        const cumulativeGpa = totalGradePoints / totalCredits;
-        return cumulativeGpa.toFixed(2);
-    }
-
-    // Otherwise, return null
-    else {
-        return null;
-    }
+    // Calculate and return the average of the GPAs for the first and second semesters
+    const cumulativeGpa = (firstSemesterGpa + secondSemesterGpa) / 2;
+    return cumulativeGpa.toFixed(2);
 }
 
 // Define a function to get the total credits for a semester
@@ -252,6 +203,11 @@ function displayGpaResult() {
         semesterGpaSpan.textContent = semesterGpa;
         cumulativeGpaSpan.textContent = cumulativeGpa;
         gpaResult.style.display = "block";
+
+        // If the cumulative GPA is above 3.5, show balloons
+        if (cumulativeGpa > 3.5) {
+            showBalloons();
+        }
     }
 
     // Otherwise, hide the result section
@@ -259,6 +215,48 @@ function displayGpaResult() {
         gpaResult.style.display = "none";
     }
 }
+
+function showBalloons() {
+    // Set the number of balloons to create
+    const numBalloons = 10;
+
+    // Set the colors for the balloons
+    const colors = ["red", "orange", "yellow", "green", "blue", "purple"];
+
+    // Loop through and create each balloon
+    Array(numBalloons).fill().forEach(() => {
+        // Create a new balloon element
+        const balloon = document.createElement("div");
+        balloon.classList.add("balloon");
+
+        // Set the background color of the balloon
+        const colorIndex = Math.floor(Math.random() * colors.length);
+        const color = colors[colorIndex];
+        balloon.style.backgroundColor = color;
+
+        // Set the initial position of the balloon
+        const x = Math.random() * window.innerWidth;
+        balloon.style.left = `${x}px`;
+        balloon.style.bottom = "-100px";
+
+        // Append the balloon to the body
+        document.body.appendChild(balloon);
+
+        // Animate the balloon
+        setTimeout(() => {
+            balloon.style.bottom = `${window.innerHeight + 100}px`;
+            balloon.style.opacity = 0;
+        }, 10);
+
+        // Remove the balloon after the animation is complete
+        balloon.addEventListener("transitionend", () => {
+            document.body.removeChild(balloon);
+        });
+    });
+}
+
+
+
 
 // Add an event listener to the add course button
 addCourseBtn.addEventListener("click", function() {

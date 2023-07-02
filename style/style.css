@@ -32,6 +32,14 @@ h1 {
     }
 }
 
+p {
+    color: aliceblue;
+}
+
+h3 {
+    color: aliceblue;
+}
+
 #gpa-form {
     width: 80%;
     margin: 0 auto;
@@ -118,4 +126,34 @@ button {
 
 #gpa-result p {
     font-weight: bold;
+}
+
+.balloon {
+    position: absolute;
+    width: 50px;
+    height: 75px;
+    border-radius: 0 0 50px 50px;
+    transition: bottom 4s ease-in, opacity 4s ease-in;
+}
+
+.balloon:before,
+.balloon:after {
+    content: "";
+    position: absolute;
+}
+
+.balloon:before {
+    width: 50%;
+    height: 50%;
+    top: -25%;
+    left: 25%;
+    border-radius: 50%;
+}
+
+.balloon:after {
+    width: 2px;
+    height: 50px;
+    background-color: black;
+    top: 100%;
+    left: calc(50% - 1px);
 }
